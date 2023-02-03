@@ -55,7 +55,7 @@ const handleRefreshToken = asyncHandler(async (req, res) => {
     throw new Error("No Refresh Token in cookie");
   }
   const refreshToken = cookie?.refreshToken;
-  // console.log(refreshToken);
+  console.log(refreshToken);
   const user = await User.findOne({ refreshToken });
   if (!user) {
     throw new Error("Invalid Refresh Token");
