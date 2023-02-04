@@ -55,7 +55,6 @@ const handleRefreshToken = asyncHandler(async (req, res) => {
     throw new Error("No Refresh Token in cookie");
   }
   const refreshToken = cookie?.refreshToken;
-  console.log(refreshToken);
   const user = await User.findOne({ refreshToken });
   if (!user) {
     throw new Error("Invalid Refresh Token");
@@ -101,7 +100,6 @@ const updateUser = asyncHandler(async (req, res) => {
     const update = await User.findByIdAndUpdate(_id, req.body, {
       new: true,
     });
-    console.log(update);
     res.json({ update });
   } catch (error) {
     throw new Error(error);
@@ -173,6 +171,20 @@ const unBlockUser = asyncHandler(async (req, res) => {
   }
 });
 
+const updatePassword = asyncHandler(async (req, res) => {
+  const { _id } = req.user;
+  const { password } = req.body;
+  validateMongodbId(_id);
+  const user = await User.findById(_id);
+  if (password) {
+    user.password = password;
+    const updatedPassword = await user.save();
+    res.json(updatedPassword);
+  } else {
+    res.json(user);
+  }
+});
+
 module.exports = {
   createUser,
   loginUserCtrl,
@@ -184,4 +196,5 @@ module.exports = {
   unBlockUser,
   handleRefreshToken,
   logout,
+  updatePassword,
 };
