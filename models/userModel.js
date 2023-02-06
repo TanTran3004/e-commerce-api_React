@@ -63,9 +63,7 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 userSchema.methods.createPasswordResetToken = async function () {
-  console.log("vao day");
   const resetToken = crypto.randomBytes(32).toString("hex");
-  console.log("resetToken: ", resetToken);
   this.passwordResetToken = crypto
     .createHash("sha256")
     .update(resetToken)

@@ -109,10 +109,8 @@ const filterProducts = asyncHandler(async (req, res) => {
     const limit = req.query.limit * 1 || 10;
     const skip = (page - 1) * limit;
     query = query.skip(skip).limit(limit);
-    console.log("page: ", page, "limit: ", limit, "skip: ", skip);
     if (req.query.page) {
       const numProducts = await Product.countDocuments();
-      console.log("numProducts: ", numProducts);
       if (skip >= numProducts) throw new Error("This page does not exist");
     }
 

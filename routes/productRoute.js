@@ -13,21 +13,21 @@ const {
 } = require("../middlewares/authMiddleware");
 const router = express.Router();
 
-router.post("/createProduct", authMiddleware, adminMiddleware, createProduct);
+router.post("/create-product", authMiddleware, adminMiddleware, createProduct);
 router.get("/productID/:id", getEachProduct);
-router.get("/getAll", getAllProducts);
+router.get("/all-products", getAllProducts);
 router.put(
-  "/updateProduct/:id",
+  "/update-product/:id",
   authMiddleware,
   adminMiddleware,
   updateProduct
 );
 router.delete(
-  "/deleteProduct/:id",
+  "/delete-product/:id",
   authMiddleware,
   adminMiddleware,
   deleteProduct
 );
-router.get("/filterProduct", filterProducts);
+router.get("/filter-product", filterProducts);
 
 module.exports = router;

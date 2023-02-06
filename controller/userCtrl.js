@@ -26,7 +26,6 @@ const loginUserCtrl = asyncHandler(async (req, res) => {
   const findUser = await User.findOne({ email });
   if (findUser && (await findUser.matchPassword(password))) {
     const refreshToken = generateRefreshToken(findUser?._id);
-    console.log("vao day", refreshToken);
     const updateUser = await User.findByIdAndUpdate(
       findUser.id,
       {
@@ -212,7 +211,6 @@ const forgotPasswordToken = asyncHandler(async (req, res) => {
 });
 
 const resetPassword = asyncHandler(async (req, res) => {
-  console.log("req.body: ", req.body);
   const { password } = req.body;
   const { token } = req.params;
   const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
