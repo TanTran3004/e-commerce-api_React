@@ -14,12 +14,14 @@ const dotenv = require("dotenv").config();
 const PORT = process.env.PORT || 4000;
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
+const cors = require("cors");
 dbConnect();
 // app.use("/", (req, res) => {
 //   res.send("Hello World");
 // });
 
 app.use(morgan("dev"));
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());

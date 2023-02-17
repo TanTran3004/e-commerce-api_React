@@ -13,8 +13,8 @@ const sendEmail = asyncHandler(async (data, req, res) => {
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
-      user: "thanhantran21@gmail.com", // generated ethereal user
-      pass: "okifhhhxhjasrioe", // generated ethereal password
+      user: process.env.MAIL_ID, // generated ethereal user
+      pass: process.env.MP, // generated ethereal password
     },
   });
 

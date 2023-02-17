@@ -1,7 +1,6 @@
-const mongoose = require("mongoose"); // Erase if already required
+const mongoose = require("mongoose");
 
-// Declare the Schema of the Mongo model
-var couponSchema = new mongoose.Schema({
+const couponSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -11,7 +10,6 @@ var couponSchema = new mongoose.Schema({
   expiry: {
     type: Date,
     required: true,
-    unique: true,
   },
   discount: {
     type: Number,
@@ -19,5 +17,6 @@ var couponSchema = new mongoose.Schema({
   },
 });
 
-//Export the model
-module.exports = mongoose.model("Coupon", couponSchema);
+const Coupon = mongoose.model("Coupon", couponSchema);
+
+module.exports = Coupon;
