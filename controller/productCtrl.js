@@ -3,7 +3,10 @@ const asyncHandler = require("express-async-handler");
 const slugify = require("slugify");
 const validateMongodbId = require("../utils/validateMongodb");
 const User = require("../models/userModel");
-const cloudinaryUploadImg = require("../utils/cloudinary");
+const {
+  cloudinaryUploadImg,
+  cloudinaryDeleteImg,
+} = require("../utils/cloudinary");
 const fs = require("fs");
 // create a new product
 const createProduct = asyncHandler(async (req, res) => {
@@ -168,6 +171,7 @@ const addWishlist = asyncHandler(async (req, res) => {
 
 const ratingProduct = asyncHandler(async (req, res) => {
   const { id } = req.user;
+  validateMongodbId(id);
   const { star, prodId, comment } = req.body;
   try {
     const product = await Product.findById(prodId);
@@ -217,10 +221,9 @@ const ratingProduct = asyncHandler(async (req, res) => {
 });
 
 const uploadImages = asyncHandler(async (req, res) => {
-  const { id } = req.params;
-  validateMongodbId(id);
   try {
     const uploader = async (path) => await cloudinaryUploadImg(path, "images");
+    console.log("vao day");
     const urls = [];
     const files = req.files;
     for (const file of files) {
@@ -229,16 +232,20 @@ const uploadImages = asyncHandler(async (req, res) => {
       urls.push(newpath);
       fs.unlinkSync(path);
     }
-    const findProduct = await Product.findByIdAndUpdate(
-      id,
-      {
-        images: urls.map((file) => {
-          return file;
-        }),
-      },
-      { new: true }
-    );
-    res.json(findProduct);
+    const images = urls.map((file) => {
+      return file;
+    });
+    res.json(images);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+const deleteImages = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deleted = cloudinaryDeleteImg(id, "images");
+    res.json({ message: "Deleted", deleted });
   } catch (error) {
     throw new Error(error);
   }
@@ -254,4 +261,5 @@ module.exports = {
   addWishlist,
   ratingProduct,
   uploadImages,
+  deleteImages,
 };

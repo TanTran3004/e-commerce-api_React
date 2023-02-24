@@ -9,6 +9,7 @@ const {
   addWishlist,
   ratingProduct,
   uploadImages,
+  deleteImages,
 } = require("../controller/productCtrl");
 const {
   adminMiddleware,
@@ -33,7 +34,7 @@ router.put(
   updateProduct
 );
 router.put(
-  "/update-product-img/:id",
+  "/update-product-img/",
   authMiddleware,
   adminMiddleware,
   uploadPhoto.array("images", 10),
@@ -45,6 +46,12 @@ router.delete(
   authMiddleware,
   adminMiddleware,
   deleteProduct
+);
+router.delete(
+  "/delete-image/:id",
+  authMiddleware,
+  adminMiddleware,
+  deleteImages
 );
 router.get("/filter-product", filterProducts);
 
