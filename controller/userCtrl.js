@@ -400,13 +400,13 @@ const createOrder = asyncHandler(async (req, res) => {
         method: "COD",
         amount: finalAmount,
         status: "Cash On Delivery",
-        created: Date.now(),
+        created: JSON.stringify(new Date()),
         currency: "USD",
       },
       orderStatus: "Cash On Delivery",
       orderBy: user._id,
     }).save();
-
+    console.log(JSON.stringify(new Date()));
     let update = userCart.products.map((item) => {
       return {
         updateOne: {
@@ -428,7 +428,8 @@ const getOrders = asyncHandler(async (req, res) => {
   try {
     const userOrders = await Order.find({ orderBy: _id })
       .populate("products.product")
-      .sort({ createdAt: -1 });
+      .populate("orderBy")
+      .exec();
     res.json(userOrders);
   } catch (error) {
     throw new Error(error);
