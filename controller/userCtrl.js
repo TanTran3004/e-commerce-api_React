@@ -406,7 +406,6 @@ const createOrder = asyncHandler(async (req, res) => {
       orderStatus: "Cash On Delivery",
       orderBy: user._id,
     }).save();
-    console.log(JSON.stringify(new Date()));
     let update = userCart.products.map((item) => {
       return {
         updateOne: {
