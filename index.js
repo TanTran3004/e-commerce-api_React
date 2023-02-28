@@ -11,6 +11,7 @@ const brandRoute = require("./routes/brandRoute");
 const couponRoute = require("./routes/couponRoute");
 const colorRoute = require("./routes/colorRoute");
 const enquiryRoute = require("./routes/enqRoute");
+const uploadRoute = require("./routes/uploadRoute");
 const app = express();
 const dotenv = require("dotenv").config();
 const PORT = process.env.PORT || 4000;
@@ -37,6 +38,7 @@ app.use("/api/brand", brandRoute);
 app.use("/api/coupon", couponRoute);
 app.use("/api/color", colorRoute);
 app.use("/api/enquiry", enquiryRoute);
+app.use("/api/upload", uploadRoute);
 
 app.use(notFound);
 app.use(errorHandler);
