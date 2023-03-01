@@ -24,20 +24,15 @@ const cloudinaryUploadImg = async (fileToUploads) => {
 };
 
 const cloudinaryDeleteImg = async (fileToDelete) => {
-  return new Promise(async (resolve) => {
-    cloudinary.uploader.destroy(fileToDelete, (result) => {
-      resolve(
-        {
-          url: result.secure_url,
-          asset_id: result.asset_id,
-          public_id: result.public_id,
-        },
-        {
-          resource_type: "auto",
-        }
-      );
-    });
+  const deleteResult = await cloudinary.uploader.destroy(fileToDelete, {
+    resource_type: "auto",
   });
+
+  return {
+    url: deleteResult.secure_url,
+    asset_id: deleteResult.asset_id,
+    public_id: deleteResult.public_id,
+  };
 };
 
 module.exports = { cloudinaryUploadImg, cloudinaryDeleteImg };

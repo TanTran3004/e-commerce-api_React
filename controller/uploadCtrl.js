@@ -8,10 +8,8 @@ const fs = require("fs");
 const uploadImages = asyncHandler(async (req, res) => {
   try {
     const uploader = async (path) => await cloudinaryUploadImg(path, "images");
-    console.log("vao day");
     const urls = [];
     const files = req.files;
-    console.log("files: ", files);
     for (const file of files) {
       const { path } = file;
       const newpath = await uploader(path);
@@ -37,6 +35,7 @@ const deleteImages = asyncHandler(async (req, res) => {
     throw new Error(error);
   }
 });
+
 module.exports = {
   uploadImages,
   deleteImages,
